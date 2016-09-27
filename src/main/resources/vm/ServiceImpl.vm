@@ -1,0 +1,33 @@
+package $serviceImplPackage;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import $servicePackage.${service};
+import $daoPackage.$dao;
+import javax.annotation.Resource;
+
+import $domainPackage.$domain;
+
+@Service("$serviceEntity")
+public class $serviceImpl implements $service {
+
+	@Resource
+	private $dao $daoEntity;
+
+	/**
+	 * 插入单条数据，并将生成的ID set到bean中
+	 */
+	public int insert($domain $domainEntity){
+		
+		return ${daoEntity}.insert($domainEntity);
+	}
+	
+	/**
+	 * 批量插入，生成的ID不能回传到list中的bean中
+	 */
+	public int batchInsert(List<$domain> list){
+		
+		return ${daoEntity}.batchInsert(list);
+	}
+}

@@ -1,0 +1,71 @@
+package $baseDaoPackage;
+
+import java.util.List;
+import java.util.Map;
+import org.apache.ibatis.annotations.Param;
+
+import $domainPackage.$domain;
+
+public interface $baseDao {
+
+	/**
+	 * 插入单条数据，并将生成的ID set到bean中
+	 */
+	public int insert($domain $domainEntity);
+	
+	/**
+	 * 批量插入，生成的ID不能回传到list中的bean中
+	 */
+	public int batchInsert(@Param("list") List<$domain> list);
+	
+	/**
+	 * 使用$domain类型的参数select单条数据，如果不能确保查询条件只返回1条数据，请调用SqlSelect的limit(1)方法
+	 */
+	public $domain load(@Param("sql") String sql, @Param("$domainEntity") $domain $domainEntity);
+	
+	/**
+	 * 使用Map类型的参数select单条数据，如果不能确保查询条件只返回1条数据，请调用SqlSelect的limit(1)方法
+	 */
+	public $domain loadByMap(@Param("sql") String sql, @Param("$domainEntity") Map<String, Object> map);
+	
+	/**
+	 * 使用$domain类型的参数查询，不分页
+	 */
+	public List<$domain> list(@Param("sql") String sql, @Param("$domainEntity") $domain $domainEntity);
+	
+	/**
+	 * 使用Map类型的参数查询，不分页
+	 */
+	public List<$domain> listByMap(@Param("sql") String sql, @Param("$domainEntity") Map<String, Object> map);
+	
+	/**
+	 * 使用$domain类型的参数查询符合条件的记录条数
+	 */
+	public int count(@Param("sql") String sql, @Param("$domainEntity") $domain $domainEntity);
+	
+	/**
+	 * 使用Map类型的参数查询符合条件的记录条数
+	 */
+	public int countByMap(@Param("sql") String sql, @Param("$domainEntity") Map<String, Object> map);
+	
+	/**
+	 * 使用$domain类型的参数更新
+	 */
+	public int update(@Param("sql") String sql, @Param("$domainEntity") $domain $domainEntity);
+	
+	/**
+	 * 使用Map类型的参数更新
+	 */
+	public int updateByMap(@Param("sql") String sql, @Param("$domainEntity") Map<String, Object> map);
+	
+	/**
+	 * 使用$domain类型的参数删除
+	 */
+	public int delete(@Param("sql") String sql, @Param("$domainEntity") $domain $domainEntity);
+	
+	/**
+	 * 使用Map类型的参数删除
+	 */
+	public int deleteByMap(@Param("sql") String sql, @Param("$domainEntity") Map<String, Object> map);
+	
+}

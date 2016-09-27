@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${daoPackage}.${dao}">
+
+	<resultMap id="$resultMap" type="$domain">		
+		#foreach($field in $table.fieldList)
+		#if($strUtil.equalsIgnoreCase($field.name, "id"))
+		<id property="$util.camelName($field.name)" column="$field.name" javaType="$field.javaType.name"/>
+		#else
+		<result property="$util.camelName($field.name)" column="$field.name" javaType="$field.javaType.name" />
+		#end
+		#end				
+	</resultMap>
+	
+	<sql id="${domainEntity}Columns">
+        #foreach($field in $table.fieldList)
+        `${field.name}`#if($foreach.index < $table.fieldList.size() - 1), 
+        #end
+        #end
+        
+	</sql>
+</mapper>

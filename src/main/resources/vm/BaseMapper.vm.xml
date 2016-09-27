@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${baseDaoPackage}.${baseDao}">
+
+	<resultMap id="$resultMap" type="$domain">		
+		#foreach($field in $table.fieldList)
+		#if($strUtil.equalsIgnoreCase($field.name, "id"))
+		<id property="$util.camelName($field.name)" column="$field.name" javaType="$field.javaType.name"/>
+		#else
+		<result property="$util.camelName($field.name)" column="$field.name" javaType="$field.javaType.name" />
+		#end
+		#end				
+	</resultMap>
+	
+	<sql id="${domainEntity}Columns">
+		<trim suffixOverrides=",">
+		#foreach($field in $table.fieldList)
+		`${field.name}`, 
+		#end
+		</trim>
+	</sql>
+	
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="$domain">
+		insert into `$table.name` (
+		<trim suffixOverrides=",">
+		    #foreach($field in $table.fieldList)
+		    <if test="$util.camelName($field.name) != null">`$field.name`,</if>
+			#end
+		</trim>
+		) values (
+		<trim suffixOverrides=",">
+			#foreach($field in $table.fieldList)
+			<if test="$util.camelName($field.name) != null">#{$util.camelName($field.name)},</if>
+			#end
+		</trim>
+		)
+	</insert>
+	
+	<insert id="batchInsert" parameterType="$domain">
+		insert into `$table.name` (
+			<include refid="${domainEntity}Columns"/>
+		) values 
+		<foreach item="$domainEntity" collection="list" separator=",">
+		(
+		<trim prefixOverrides=",">
+		#foreach($field in $table.fieldList)
+			,#{$domainEntity.$util.camelName($field.name)}
+		#end
+		</trim>
+		)
+		</foreach>
+	</insert>
+	
+	<select id="load" resultMap="$resultMap">
+		${sql}
+	</select>
+	
+	<select id="loadByMap" resultMap="$resultMap">
+		${sql}
+	</select>
+	
+	<select id="list" resultMap="$resultMap">
+		${sql}
+	</select>
+	
+	<select id="listByMap" resultMap="$resultMap">
+		${sql}
+	</select>
+	
+	<select id="count" resultType="int">
+		${sql}
+	</select>
+	
+	<select id="countByMap" resultType="int">
+		${sql}
+	</select>
+
+	<update id="update">
+		${sql}
+	</update>
+	
+	<update id="updateByMap">
+		${sql}
+	</update>
+	
+	<delete id="delete">
+		${sql}
+	</delete>
+	
+	<delete id="deleteByMap">
+		${sql}
+	</delete>
+</mapper>

@@ -1,0 +1,18 @@
+package $servicePackage;
+
+import java.util.List;
+
+import $domainPackage.$domain;
+
+public interface $service {
+
+	/**
+	 * 插入单条数据，并将生成的ID set到bean中
+	 */
+	public int insert($domain $domainEntity);
+	
+	/**
+	 * 批量插入，生成的ID不能回传到list中的bean中
+	 */
+	public int batchInsert(List<$domain> list);
+}

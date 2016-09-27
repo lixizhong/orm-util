@@ -1,0 +1,10 @@
+package $daoPackage;
+
+import $baseDaoPackage.$baseDao;
+
+public interface ${dao} extends $baseDao{
+
+
+
+
+}

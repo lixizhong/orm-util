@@ -1,0 +1,83 @@
+package ${domainPackage};
+
+#if($table.comment != "")
+/**
+ * $table.comment
+ */
+#end
+
+import java.io.Serializable;
+
+public class ${domain} implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	public static final String tableName = "`$table.name`";
+
+	#foreach($field in $table.fieldList)
+	/**
+	 * $!{field.comment}. 
+	 * Default: $!{field.defaultValue}
+	 */
+	private $util.javaTypeName($field.javaType)	$util.camelName($field.name);
+	
+	#end
+	
+	public static abstract class Columns{
+		#foreach($field in $table.fieldList)
+		public static final String $util.camelName($field.name) = "`$field.name`";
+		#end
+		
+		public static final String All = 
+			"#foreach($field in $table.fieldList)#if($foreach.index>0), #end`$field.name`#end";
+	}
+	
+	public static abstract class MapKeys{
+		#foreach($field in $table.fieldList)
+		public static final String $util.camelName($field.name) = "$util.camelName($field.name)";
+		#end
+	}
+	
+	public static abstract class Updates{
+		#foreach($field in $table.fieldList)
+		public static final String $util.camelName($field.name) = "`$field.name` = #{${domainEntity}.${util.camelName($field.name)}}";
+		#end
+	}
+	
+	public static abstract class Where{
+		#foreach($field in $table.fieldList)
+		public static final String $util.camelName($field.name)(String op){
+			return "`$field.name` " + op + " #{${domainEntity}.${util.camelName($field.name)}}";
+		}
+		#end
+	}
+	
+	public static abstract class And extends Where{ }
+	
+	public static abstract class Or extends Where{ }
+	
+	public static abstract class OrderBy{
+		#foreach($field in $table.fieldList)
+		public static final String $util.camelName($field.name) = "`$field.name`";
+		#end
+	}
+	
+	#foreach($field in $table.fieldList)
+	/**
+	 * $!{field.comment}.
+	 * Default: $!{field.defaultValue}
+	 */
+	public $util.javaTypeName($field.javaType) $util.getMethodCode($field.name, $field.javaType){
+		return $util.camelName($field.name);
+	}
+	
+	/**
+	 * $!{field.comment}. 
+	 * Default: $!{field.defaultValue}
+	 */
+	public void $util.setMethodCode($field.name, $field.javaType){
+		this.$util.camelName($field.name) = $util.camelName($field.name);
+	}
+	
+	#end
+}
