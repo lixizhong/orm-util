@@ -1,20 +1,19 @@
 package lxz.dbutil.main;
 
+import com.alibaba.fastjson.JSONObject;
+import lxz.util.xls.reader.CellReaderSetting;
+import lxz.util.xls.reader.RowReader;
+import lxz.util.xls.reader.XlsReader;
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
-
-import com.alibaba.fastjson.JSONObject;
-
-import lxz.util.xls.reader.CellReaderSetting;
-import lxz.util.xls.reader.RowReader;
-import lxz.util.xls.reader.XlsReader;
-
+/**
+ * 读取excel，生成建表语句
+ */
 public class CreateTable {
-
-	
 	public static void main(String[] args) throws Exception{
 		
 		List<CellReaderSetting> cellList = new ArrayList<CellReaderSetting>();
@@ -64,13 +63,12 @@ public class CreateTable {
 					"COMMENT '" + text + ":" + comment + "',");
 				
 				/*
-				 * 
 				 * `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `store_code` varchar(20) NOT NULL COMMENT '店铺编码',
-  `category3` varchar(100) DEFAULT NULL COMMENT '三级品类',
-  `brand_code` varchar(100) DEFAULT NULL COMMENT '品牌',
-  `sku` bigint(20) DEFAULT NULL COMMENT 'SKU',
-  `source` tinyint(1) DEFAULT NULL COMMENT '来源 1：采购 2：手工录入',
+                  `store_code` varchar(20) NOT NULL COMMENT '店铺编码',
+                  `category3` varchar(100) DEFAULT NULL COMMENT '三级品类',
+                  `brand_code` varchar(100) DEFAULT NULL COMMENT '品牌',
+                  `sku` bigint(20) DEFAULT NULL COMMENT 'SKU',
+                  `source` tinyint(1) DEFAULT NULL COMMENT '来源 1：采购 2：手工录入',
 				 */
 				
 				JSONObject jsonObject = new JSONObject();

@@ -1,17 +1,8 @@
 package lxz.dbutil.main;
-import java.io.File;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-
+import lxz.dbutil.util.SqlTypeMap;
+import lxz.dbutil.util.Util;
+import lxz.dbutil.util.orm.Field;
+import lxz.dbutil.util.orm.Table;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.output.FileWriterWithEncoding;
 import org.apache.commons.lang3.ArrayUtils;
@@ -20,10 +11,14 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 
-import lxz.dbutil.util.SqlTypeMap;
-import lxz.dbutil.util.Util;
-import lxz.dbutil.util.orm.Field;
-import lxz.dbutil.util.orm.Table;
+import java.io.File;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
 /**
  * 读取mysql数据库信息，根据数据表的信息生成mybatis使用的domain、dao、service、mapper等文件。
@@ -38,7 +33,8 @@ public class Db2Java {
 	private static final String domainSubfix = "Ex";
 	
 	//基础包名
-	private static final String basePackage = "com.xxx.yyyy";
+	private static final String basePackage = "com.jd.jw.purchase";
+	//private static final String basePackage = "com.jd.jw.marketing";
 	
 	//domain类包名
 	private static final String domainDirName = "domain";
@@ -74,13 +70,13 @@ public class Db2Java {
     private static String serviceImplDir = serviceDir + File.separatorChar + "impl";
     
     //数据连接字符串
-  	private static final String url = ""; 
+  	private static final String url = "jdbc:mysql://192.168.166.17:3306/jw_purchase?user=root&password=123456&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true"; 
+  	//private static final String url = "jdbc:mysql://192.168.166.17:3306/jw_marketing?user=root&password=123456&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true"; 
   	
     //要生成类文件的表格
   	private static final String[] tables = 
   			new String[]{
-  					"tablename1",
-  					"tablename2"
+  					"jw_po"
   			};
 	
 	public static void main(String[] args) throws Exception {
